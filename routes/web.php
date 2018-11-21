@@ -18,10 +18,6 @@ Route::get('/', function () {
 
 use App\Models\GraphQLServer;
 use App\Models\Query\Query;
-Route::get('/test', function() {
-	dd(GraphQLServer::all()->last());
-});
-
 Auth::routes();
 
 Route::get('home', 'HomeController@index')->name('home');
@@ -43,10 +39,7 @@ Route::resource('users', 'UserController');
 Route::resource('servers', 'GraphQLServerController')->except(['show']);
 Route::get('servers/{server}/refresh', 'GraphQLServerController@refresh')->name('servers.refresh');
 Route::get('queries/{id}/submit', 'QueryController@submit');
-
-
-
-
+Route::resource('applications','ApplicationsController')->except(['show','index', 'edit']);;
 
 Route::get('/contact/me', 'InterestedPartyController@create');
 Route::get('/contact', 'InterestedPartyController@index')->middleware('admin');
