@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Exceptions\HandshakeFailedException;
 
 class ApplicationsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Create a new controller instance.
      *
-     * @return \Illuminate\Http\Response
-    public function index()
-    {
-        //
-    }
+     * @return void
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -35,13 +36,39 @@ class ApplicationsController extends Controller
      */
     public function store(Request $request)
     {
-		$application = new Application($request->except('_token'));
-		// @Resume: Verify the application
-		// 1) Check if urls are valid
-		// 2) Handshake application via a post request with some user info
-		// 3) Save application, redirect home
-		// 4) Implement update, delete	
-    }
+		$formData = $request->except('_token');
+		$validator = \Validator::make($formData, [
+			'home' => 'required|url',
+			'name' => 'required|string',
+			'callback' => 'required|url',
+			'description' => 'sometimes|string'
+		], [
+			'required' => 'The :attribute is required',
+			'url' => 'The :attribute must be a valid url'
+		]);
+
+		if ($validator->fails()) {
+    		return redirect()->back()
+                        ->withInput($request->input())
+                        ->withErrors($validator);
+		}
+
+		$application = new Application($formData);
+
+		// Add handshake
+
+		$user = \Auth::user();
+		try {
+			$user->applications()->save($application);
+		} catch (HandshakeFailedException $e) {
+    		return redirect()->back()
+                        ->withInput($request->input())
+						->withError('Application failed to handshake');
+
+		}
+
+		return redirect('home')->withStatus('Application saved!');
+	}
 
     /**
      * Display the specified resource.

@@ -16,8 +16,6 @@ Route::get('/', function () {
 });
 
 
-use App\Models\GraphQLServer;
-use App\Models\Query\Query;
 Auth::routes();
 
 Route::get('home', 'HomeController@index')->name('home');
@@ -44,3 +42,11 @@ Route::resource('applications','ApplicationsController')->except(['show','index'
 Route::get('/contact/me', 'InterestedPartyController@create');
 Route::get('/contact', 'InterestedPartyController@index')->middleware('admin');
 Route::post('/contact', 'InterestedPartyController@store');
+
+use Illuminate\Http\Request;
+Route::post('/callback/handshake', function(Request $request) {
+	return response('CREATED', 201)->header('Content-Type','text/plain');
+});
+Route::post('/callback', function(Request $request) {
+	return response('CREATED', 201)->header('Content-Type','text/plain');
+});

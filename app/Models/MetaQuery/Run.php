@@ -3,11 +3,11 @@
 namespace App\Models\MetaQuery;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\RunFinishedResolving;
 
 class Run extends Model
 {
 	protected $fillable = ['topology'];
-
 	/*
 	 * Get which metaQuery this run belongs to
 	 */
@@ -39,6 +39,8 @@ class Run extends Model
 				});	
 			}
 		}
+		// Now that this run has resolved, lets let our dependent applications now
+		event(new RunFinishedResolving($this));	
 	}
 }
 

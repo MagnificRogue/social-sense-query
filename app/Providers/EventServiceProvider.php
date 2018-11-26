@@ -13,9 +13,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+		'App\Events\RunFinishedResolving' => [
+			'App\Listeners\RunFinishedResolvingListener'
+		],
         'App\Events\Event' => [
             'App\Listeners\EventListener',
-					],
+		],
 					\SocialiteProviders\Manager\SocialiteWasCalled::class => [
 						'SocialiteProviders\Reddit\RedditExtendSocialite@handle',
 						'SocialiteProviders\Twitter\TwitterExtendSocialite@handle',

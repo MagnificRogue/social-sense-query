@@ -26,7 +26,7 @@ class MetaQueryResolver implements ResolvesMetaQueryNode
 	}
 
 	public function resolve(): bool {
-		// First, create the run for this metea query
+		// First, create the run for this meta query
 		$runFactory = new RunFactory();
 		$run = $runFactory->createRun($this->node->node);
 

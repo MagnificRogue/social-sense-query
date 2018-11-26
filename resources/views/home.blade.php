@@ -48,7 +48,7 @@
 
 							<ul class="list-group">
 							@foreach ($user->applications as $application) 
-								<a href="{{url('') . $application->home}}" target="_blank">
+								<a href="{{$application->home}}" target="_blank">
 									<li class="list-group-item"> {{ $application->name }} </li>
 								</a>
 							@endforeach
