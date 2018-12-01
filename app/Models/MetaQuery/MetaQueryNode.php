@@ -12,7 +12,6 @@ use App\Models\MetaQuery\Resolvers\ResolvedNodeResolver;
 
 class MetaQueryNode extends Model
 {
-
 	protected $fillable = [
 		'state',
 		'topology_id',

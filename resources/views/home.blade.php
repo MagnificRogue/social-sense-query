@@ -43,9 +43,12 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<ul class="list-group">
+							<a href="{{ url('applications/create') }}" class="btn btn-primary"> Create Application</a>
+							<hr/>
+
+							<ul class="list-group">
 							@foreach ($user->applications as $application) 
-								<a href="{{url('') . $application->home}}" target="_blank">
+								<a href="{{$application->home}}" target="_blank">
 									<li class="list-group-item"> {{ $application->name }} </li>
 								</a>
 							@endforeach
@@ -78,7 +81,6 @@
 											Manage
 										</a>
 							</li>
-
 							@endforeach
 
 						</ul>

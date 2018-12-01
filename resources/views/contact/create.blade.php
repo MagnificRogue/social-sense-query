@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
 @section('content')
+
 <div class="row" style='margin-left: 20px'>
 	<h3> We're really happy that you're interested in our system! If you could provide the following bits of info, we will be in contact shortly. </h3>
 	<form action="/contact" method="POST">
@@ -25,4 +25,7 @@
 	</form>
 </div>
 
+
 @endsection
+
+

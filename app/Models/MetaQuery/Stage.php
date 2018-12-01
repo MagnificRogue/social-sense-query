@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stage extends Model
 {
-
 	public function nodes() {
 		return $this->hasMany(MetaQueryNode::class);
 	}

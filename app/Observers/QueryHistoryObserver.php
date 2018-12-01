@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Query\QueryHistory;
+use App\Helpers\Application\QueryHistoryFormatter;
 use GuzzleHttp\Client;
 
 class QueryHistoryObserver 
@@ -15,33 +16,23 @@ class QueryHistoryObserver
      */
     public function created(QueryHistory $history)
     {
-			if($history->has_error) {
-				return;
-			}
+		if($history->has_error) {
+			return;
+		}
 
-			$payload = [
-				'username' => $history->user->name,
-				'data' => $history->data,
-				'time' => $history->created_at->timestamp,
-				'name' => $history->queryOfRecord->name,
-				'structure' => $history->query_structure
-			];
+		$payload = QueryHistoryFormatter::Format($history);
 
-			$history->user->applications->each(function($application) use ($payload, $history) {
-				
-				$client = new Client();
-
-				try{
-					$client->request('POST', $application->callback_url, [
-						'headers' => [
-							'Content-Type' => 'application/json',
-						],
-						'json' => $payload
-					]);
-
-				} catch (\RuntimeException$e){
-					\Log::error($e->getMessage(), ['History' => $history->id, 'Application' => $application->name, 'url' => $application->callback_url]);
-				}
-			});
+		$applications = $history->user->applications;
+		$client = new Client();
+		$applications->each(function($application) use ($payload, $client) {
+			try {
+				$client->requestAsync('POST', $application->callback, [
+					'json' => $payload,
+				]);
+			} catch (\Exception $e) {
+				throw $e;
+				// \Log::error($e->getMessage(), ['Payload' => $payload]
+			}	
+		});
     }
 }

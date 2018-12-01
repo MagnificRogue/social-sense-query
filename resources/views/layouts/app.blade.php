@@ -82,15 +82,15 @@
         </nav>
 
 				@if (Session::has('status'))
-				<div class="alert alert-primary" role="alert">
-					{{ Session::get('status') }} 
-				</div>
+					<div class="alert alert-primary" role="alert">
+						{{ Session::get('status') }} 
+					</div>
 				@endif
 
 				@if (Session::has('error'))
-				<div class="alert alert-danger" role="alert">
-					{{ Session::get('error') }} 
-				</div>
+					<div class="alert alert-danger" role="alert">
+						{{ Session::get('error') }} 
+					</div>
 				@endif
 
         <main class="" style="margin-top: 60px; margin-left: 10px;">

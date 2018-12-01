@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 use App\Models\Query\QueryHistory;
 use App\Observers\QueryHistoryObserver;
+use App\Observers\ApplicationObserver;
 use App\Models\Query\Query;
 use App\Models\MetaQuery\MetaQueryFunction;
 use App\Models\MetaQuery\MetaQuery;
+use App\Models\Application;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+			Application::observe(ApplicationObserver::class);
 			QueryHistory::observe(QueryHistoryObserver::class);
 			Relation::morphMap([
 				'query' => Query::class,
