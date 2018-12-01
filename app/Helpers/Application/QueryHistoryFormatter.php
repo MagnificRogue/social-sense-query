@@ -13,6 +13,7 @@ class QueryHistoryFormatter {
 				],
 				'type' => 'query',
 				'value' => [
+					'id' => $history->queryOfRecord->id,
 					'data' => $history->data,
 					'time' => $history->created_at->timestamp,
 					'name' => $history->queryOfRecord->name,
