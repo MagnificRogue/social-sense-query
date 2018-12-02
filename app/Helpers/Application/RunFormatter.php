@@ -31,7 +31,6 @@ class RunFormatter {
 		$payload['value']['structure']['stages'] = $serializedStages;
 		$payload['value']['data']['stages'] = $serializedStages;
 
-		dd($payload);
 
 		return $payload;
 	}
@@ -70,7 +69,7 @@ class RunFormatter {
 			})->toArray(),
 		];
 
-		if $node->node_type == 'query' {
+		if($node->node_type == 'query') {
 			$query = $node->node;
 			$payload['structure'] = $query->structure;
 		}
