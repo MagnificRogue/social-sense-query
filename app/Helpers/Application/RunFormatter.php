@@ -31,12 +31,19 @@ class RunFormatter {
 		$payload['value']['structure']['stages'] = $serializedStages;
 		$payload['value']['data']['stages'] = $serializedStages;
 
+		dd($payload);
+
 		return $payload;
 	}
 
 
+	private static function cleanPath(string $path) {
+		$cleanedAsterisks = str_replace(["*"], "", $path);
+		return split(':', $cleanedAsterisks)[0];
+	}
+
 	private static function serializeNode(MetaQueryNode $node) {
-		return [
+		$payload = [
 			'id' => $node->topology_id,
 			'name' => $node->node_name,
 			'type' => $node->node_type,
@@ -51,15 +58,24 @@ class RunFormatter {
 			'inputs' => $node->inputs->map(function($input) {
 				return [
 					'input_id' => $input->id,
+					'path' => RunFormatter::cleanPath($input->path)
 				];
 			})->toArray(),
 			'outputs' => $node->outputs->map(function($output) {
 				return [
 					'output_id' => $output->id,
+					'path' => RunFormatter::cleanPath($input->path),
 					'value' => $output->value
 				];
 			})->toArray(),
 		];
+
+		if $node->type == 'query' {
+			$query = $node->node;
+			$payload['structure'] = $query->structure;
+		}
+
+		return $payload;
 	}	
 
 	private static function serializeStage(Stage $stage) {
