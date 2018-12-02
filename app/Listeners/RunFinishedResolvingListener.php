@@ -38,8 +38,8 @@ class RunFinishedResolvingListener
 					'json' => $payload,
 				]);
 			} catch (\Exception $e) {
+				\Log::error($e->getMessage(), ['Payload' => $payload]);
 				throw $e;
-				// \Log::error($e->getMessage(), ['Payload' => $payload]
 			}	
 		});
     }

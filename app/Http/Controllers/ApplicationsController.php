@@ -40,8 +40,7 @@ class ApplicationsController extends Controller
 		$validator = \Validator::make($formData, [
 			'home' => 'required|url',
 			'name' => 'required|string',
-			'callback' => 'required|url',
-			'description' => 'sometimes|string'
+			'callback' => 'required|url'
 		], [
 			'required' => 'The :attribute is required',
 			'url' => 'The :attribute must be a valid url'

@@ -1,8 +1,9 @@
 <?php
+namespace App\Helpers\Application;
+
 
 use App\Models\Query\QueryHistory;
 
-namespace App\Helpers\Application;
 
 class QueryHistoryFormatter {
 

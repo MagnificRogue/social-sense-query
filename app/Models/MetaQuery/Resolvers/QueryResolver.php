@@ -32,7 +32,6 @@ class QueryResolver implements ResolvesMetaQueryNode
 	public function resolve(): bool {
 		
 		if($this->node->status !== 'ready' && $this->node->status !== 'error') {
-			dd($this->node->toJson());
 			throw new \Exception("Attempting to resolve a node that isn't ready");
 		} else if ($this->nodeIsWaitingForDependencies()) {
 			$this->node->setStatus('waiting');
@@ -57,7 +56,6 @@ class QueryResolver implements ResolvesMetaQueryNode
 		$server = $query->server; // What server that these queries are going to go to
 		$user = $query->user;
 
-		
 		foreach($this->queriesToResolve as $query) {
 			if ($query->value == null) {
 				$query->value =  json_decode($server->buildRequest($query->string, $user));

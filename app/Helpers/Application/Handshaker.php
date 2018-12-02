@@ -21,7 +21,8 @@ class Handshaker
 				'json' => [
 					'user' => [
 						'id' => $this->application->user->uuid,
-						'name' => $this->application->user->name
+						'name' => $this->application->user->name,
+						'email' => $this->application->user->email,
 					]
 				],
 			]);
