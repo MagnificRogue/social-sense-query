@@ -116,12 +116,11 @@ class QueryResolver implements ResolvesMetaQueryNode
 		$query = $this->node->node;  // node is the morphTo property on the MetaQueryNode, returning here a Query type
 		
 		$queries = collect([$query->getQueryNode()]);
-		$dependencies = $this->node->dependencies;
-
-		if($this->node->dependencies->count() > 0) {
+        $dependencies = $this->node->dependencies->all();
+        if(count($dependencies) > 0){
 			// For each dependency, multiply the queries 
 			// thus far by the values for each dependency
-			while($dependency = $dependencies->shift()) {
+ 			while($dependency = array_shift($dependencies)) {
 				$queries = $queries->map(function($queryNode) use ($dependency) {
 					return $this->applyValuesToQueryNode($dependency, $queryNode);
 				})->flatten();

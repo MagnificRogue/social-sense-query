@@ -71,7 +71,7 @@ class RunFormatter {
 
 		if($node->node_type == 'query') {
 			$query = $node->node;
-			$payload['structure'] = $query->structure;
+			$payload['structure'] = json_decode($query->structure);
 		}
 
 		return $payload;
