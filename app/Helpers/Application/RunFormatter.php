@@ -39,7 +39,7 @@ class RunFormatter {
 
 	private static function cleanPath(string $path) {
 		$cleanedAsterisks = str_replace(["*"], "", $path);
-		return split(':', $cleanedAsterisks)[0];
+		return explode(':', $cleanedAsterisks)[0];
 	}
 
 	private static function serializeNode(MetaQueryNode $node) {
@@ -64,13 +64,13 @@ class RunFormatter {
 			'outputs' => $node->outputs->map(function($output) {
 				return [
 					'output_id' => $output->id,
-					'path' => RunFormatter::cleanPath($input->path),
-					'value' => $output->value
+					'path' => RunFormatter::cleanPath($output->path),
+					'value' => json_decode($output->value)
 				];
 			})->toArray(),
 		];
 
-		if $node->type == 'query' {
+		if $node->node_type == 'query' {
 			$query = $node->node;
 			$payload['structure'] = $query->structure;
 		}
